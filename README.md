@@ -1,3 +1,15 @@
+# rm's fork of microsoft/calculator
+
+[Ars Technica article on calc.exe](https://arstechnica.com/gadgets/2019/03/calc-exe-is-now-open-source-theres-surprising-depth-in-its-ancient-code/)
+
+## License
+Copyright (c) Microsoft Corporation. All rights reserved.  
+Copyright (c) Roshan Mathews. All rights reserved.
+
+Licensed under the [MIT License](./LICENSE).
+
+---
+
 # Calculator
 The Windows Calculator app is a modern Windows app written in C++ that ships pre-installed with Windows.
 The app provides standard, scientific, and programmer calculator functionality, as well as a set of converters between various units of measurement and currencies.
