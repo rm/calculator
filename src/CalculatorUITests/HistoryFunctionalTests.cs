@@ -2,9 +2,12 @@
 // Licensed under the MIT License.
 
 using CalculatorUITestFramework;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
+
 using System;
 
 namespace CalculatorUITests
@@ -12,7 +15,7 @@ namespace CalculatorUITests
     [TestClass]
     public class HistoryFunctionalTests
     {
-        private static StandardCalculatorPage page = new StandardCalculatorPage();
+        private static readonly StandardCalculatorPage page = new StandardCalculatorPage();
 
         /// <summary>
         /// Initializes the WinAppDriver web driver session.
@@ -88,10 +91,10 @@ namespace CalculatorUITests
             page.StandardOperators.EqualButton.Click();
 
             var historyItems = page.HistoryPanel.GetAllHistoryListViewItems();
-            Assert.IsTrue(historyItems[0].GetValue().Equals("-1", StringComparison.InvariantCultureIgnoreCase));
-            Assert.IsTrue(historyItems[0].GetExpression().Equals("2   -   3 =", StringComparison.InvariantCultureIgnoreCase));
-            Assert.IsTrue(historyItems[1].GetValue().Equals("-5.6", StringComparison.InvariantCultureIgnoreCase));
-            Assert.IsTrue(historyItems[1].GetExpression().Equals("-3   +   -2.6 =", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[0].GetValue().Equals("Minus (1", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[0].GetExpression().Equals("2 Minus ( 3=", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[1].GetValue().Equals("Minus (5.6", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[1].GetExpression().Equals("-3 + -2.6=", StringComparison.InvariantCultureIgnoreCase));
 
             Assert.AreEqual("-1", page.CalculatorResults.GetCalculatorResultText());
 
@@ -133,18 +136,18 @@ namespace CalculatorUITests
             page.StandardOperators.EqualButton.Click();
 
             var historyPanelItems = page.HistoryPanel.GetAllHistoryListViewItems();
-            Assert.IsTrue(historyPanelItems[0].GetValue().Equals("-1", StringComparison.InvariantCultureIgnoreCase));
-            Assert.IsTrue(historyPanelItems[0].GetExpression().Equals("2   -   3 =", StringComparison.InvariantCultureIgnoreCase));
-            Assert.IsTrue(historyPanelItems[1].GetValue().Equals("-5.6", StringComparison.InvariantCultureIgnoreCase));
-            Assert.IsTrue(historyPanelItems[1].GetExpression().Equals("-3   +   -2.6 =", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyPanelItems[0].GetValue().Equals("Minus (1", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyPanelItems[0].GetExpression().Equals("2 Minus ( 3=", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyPanelItems[1].GetValue().Equals("Minus (5.6", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyPanelItems[1].GetExpression().Equals("-3 + -2.6=", StringComparison.InvariantCultureIgnoreCase));
 
             Assert.AreEqual("-1", page.CalculatorResults.GetCalculatorResultText());
 
             var historyItems = page.HistoryPanel.GetAllHistoryFlyoutListViewItems();
-            Assert.IsTrue(historyItems[0].GetValue().Equals("-1", StringComparison.InvariantCultureIgnoreCase));
-            Assert.IsTrue(historyItems[0].GetExpression().Equals("2   -   3 =", StringComparison.InvariantCultureIgnoreCase));
-            Assert.IsTrue(historyItems[1].GetValue().Equals("-5.6", StringComparison.InvariantCultureIgnoreCase));
-            Assert.IsTrue(historyItems[1].GetExpression().Equals("-3   +   -2.6 =", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[0].GetValue().Equals("Minus (1", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[0].GetExpression().Equals("2 Minus ( 3=", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[1].GetValue().Equals("Minus (5.6", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[1].GetExpression().Equals("-3 + -2.6=", StringComparison.InvariantCultureIgnoreCase));
 
             Assert.AreEqual("-1", page.CalculatorResults.GetCalculatorResultText());
 

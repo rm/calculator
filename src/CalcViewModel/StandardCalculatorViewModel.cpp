@@ -137,6 +137,13 @@ StandardCalculatorViewModel::StandardCalculatorViewModel()
 String ^ StandardCalculatorViewModel::LocalizeDisplayValue(_In_ wstring const& displayValue)
 {
     wstring result(displayValue);
+
+    // Adds leading padding 0's to Programmer Mode's Binary Display
+    if (IsProgrammer && CurrentRadixType == NumberBase::BinBase)
+    {
+        result = AddPadding(result);
+    }
+
     LocalizationSettings::GetInstance()->LocalizeDisplayValue(&result);
     return ref new Platform::String(result.c_str());
 }
@@ -719,7 +726,7 @@ void StandardCalculatorViewModel::OnPasteCommand(Object ^ parameter)
     }
 
     // Ensure that the paste happens on the UI thread
-    create_task(CopyPasteManager::GetStringToPaste(mode, NavCategory::GetGroupType(mode), numberBase, bitLengthType))
+    create_task(CopyPasteManager::GetStringToPaste(mode, NavCategoryStates::GetGroupType(mode), numberBase, bitLengthType))
         .then([that, mode](String ^ pastedString) { that->OnPaste(pastedString); }, concurrency::task_continuation_context::use_current());
 }
 
@@ -1188,20 +1195,20 @@ void StandardCalculatorViewModel::SetCalculatorType(ViewMode targetState)
     {
     case ViewMode::Standard:
         IsStandard = true;
-        ResetDisplay();
+        ResetRadixAndUpdateMemory(true);
         SetPrecision(StandardModePrecision);
         UpdateMaxIntDigits();
         break;
 
     case ViewMode::Scientific:
         IsScientific = true;
-        ResetDisplay();
+        ResetRadixAndUpdateMemory(true);
         SetPrecision(ScientificModePrecision);
         break;
 
     case ViewMode::Programmer:
         IsProgrammer = true;
-        ResetDisplay();
+        ResetRadixAndUpdateMemory(false);
         SetPrecision(ProgrammerModePrecision);
         break;
     }
@@ -1227,11 +1234,18 @@ String ^ StandardCalculatorViewModel::GetLocalizedStringFormat(String ^ format, 
     return LocalizationStringUtil::GetLocalizedString(format, displayValue);
 }
 
-void StandardCalculatorViewModel::ResetDisplay()
+void StandardCalculatorViewModel::ResetRadixAndUpdateMemory(bool resetRadix)
 {
-    AreHEXButtonsEnabled = false;
-    CurrentRadixType = NumberBase::DecBase;
-    m_standardCalculatorManager.SetRadix(RadixType::Decimal);
+    if (resetRadix)
+    {
+        AreHEXButtonsEnabled = false;
+        CurrentRadixType = NumberBase::DecBase;
+        m_standardCalculatorManager.SetRadix(RadixType::Decimal);
+    }
+    else
+    {
+        m_standardCalculatorManager.SetMemorizedNumbersString();
+    }
 }
 
 void StandardCalculatorViewModel::SetPrecision(int32_t precision)
